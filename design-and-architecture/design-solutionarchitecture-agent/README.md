@@ -21,6 +21,8 @@ The pattern addresses common challenges in cloud architecture design, including:
 - Maintaining consistent documentation
 - Enabling collaboration across teams
 
+You can access the live demo of this solution through: http://demo-1085524942.us-west-2.elb.amazonaws.com/ 
+
 
 This solution is particularly valuable for organizations seeking to streamline their cloud architecture design process while maintaining high standards of quality and compliance. With the help of this tool you can:
 
@@ -41,6 +43,8 @@ This solution is particularly valuable for organizations seeking to streamline t
 - Python 3.8 or later
 - Node.js 14 or later (for CDK)
 - npm install -g aws-cdk@latest
+- Region selected as us-west-2
+- Model Access to the Claude Sonnet 3.5 v2 should be provided from Amazon Bedrock
 
 
 ## Setup
@@ -56,17 +60,17 @@ This solution is particularly valuable for organizations seeking to streamline t
 2. Create and activate a virtual environment:
 
 ```
- python3 -m venv .venv
- source .venv/bin/activate
- pip install -r requirements.txt
- cd functions/drawing_function/
+ python3 -m venv venv
+ source venv/bin/activate
 
 ```
 
 3. Install dependencies:
 
 ```
+ cd functions/drawing_function/
  pip install -r requirements.txt
+
 ```
 
 4. Before moving to cdk setup; In the functions/drawing_function folder, run below commands:
@@ -83,7 +87,12 @@ This solution is particularly valuable for organizations seeking to streamline t
 5. Bootstrap your AWS environment (if not already done):
 
 ```
-$ cdk bootstrap
+cd ../../cdk/
+
+pip install -r requirements.txt 
+
+cdk bootstrap
+
 ```
 
 ## Deployment
@@ -91,7 +100,9 @@ $ cdk bootstrap
 To deploy the stack:
 
 ```
-$ cdk deploy
+
+cdk deploy
+
 ```
 
 This will:
@@ -99,6 +110,7 @@ This will:
 - Create the Lambda function
 - Set up the S3 bucket
 - Create the Bedrock agent with the OpenAPI schema
+- Note the Bedrock Agent ID & S3 bucket created in this step
 
 ## Useful commands
 
@@ -112,24 +124,21 @@ This will:
 
 ### Streamlit UI for AWS SA AGENT
 
-Then, in any other terminal, navigate to the [**streamlit** folder](streamlit/README.md) to run the Streamlit UI app and execute architecture-related commands.
+Then, navigate to the [**streamlit** folder](streamlit/README.md) to run the Streamlit UI app and execute architecture-related commands.
 
 ```
 
-cd ../../streamlit/
+cd ../streamlit/
 
 ```
 
-**Install Python dependencies**
-```
-pip install -r requirements.txt
-```
 
 **Set environment variables**
 ```
 export AWS_DEFAULT_REGION=us-west-2
 export AGENT_ID= XXXXXXXX # WRITE YOUR BEDROCK AGENT ID
-# SET ALSO AWS CREDENTIALS
+aws configure # SET ALSO AWS CREDENTIALS
+
 ```
 
 
